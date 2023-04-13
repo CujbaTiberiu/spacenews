@@ -34,9 +34,9 @@ const Homepage = () => {
 
     return(
         <>
-        <h1 className="mt-4">Main Articles</h1>
-       <Container className="mt-4">
-        <Row className="g-2">
+        <h1 className="pt-4 text-light">Main Articles</h1>
+       <Container>
+        <Row className="g-2 justify-content-center">
            {
                articles.map((article) => (
                    <ArticleCard article = {article} key={article.id} />

@@ -3,6 +3,13 @@ import Card from 'react-bootstrap/Card';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SingleArticle } from '../interfaces/SingleArticle';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import '../css/articledetail.css'
+
+// interface ArticleProp {
+//     article : SingleArticle
+// }
 
 
 
@@ -10,11 +17,12 @@ function ArticleDetail() {
 
     const params = useParams()
     console.log(params)
+    const navigate = useNavigate()
 
-    const [article, setArticle] = useState<SingleArticle[]>([])
+    const [article, setArticle] = useState<SingleArticle |null>(null)
     const API_KEY = `https://api.spaceflightnewsapi.net/v3/articles/${params.id}`
 
-    const fetchArticles = async () => {
+    const fetchArticle = async () => {
         try {
           let response = await fetch(
             API_KEY
@@ -32,24 +40,38 @@ function ArticleDetail() {
       }
     
       useEffect(() => {
-        fetchArticles()
+        fetchArticle()
       }, [])
 
 
 
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
+    <div className='bkr'>
+    <Container>
+        <Row className='justify-content-center'>
+        <Col xs={10} md={8} >
+          {article &&
+    <Card className='mt-5'>
+      <Card.Img variant="top" src={article.imageUrl} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
+        <Card.Title>{article.title}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+            <div>
+          {article.summary}
+          </div>
+          <div>
+            See full article <a href={article.url}>{article.newsSite}</a>
+          </div>
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Button variant="outline-primary"  onClick={() => navigate('/')}>Go Back</Button>
       </Card.Body>
     </Card>
+    }
+    </Col>
+    </Row>
+    </Container>
+    </div>
   );
 }
 

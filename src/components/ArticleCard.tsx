@@ -19,10 +19,10 @@ const ArticleCard = ({article}:ArticleProp) => {
       };
 
   return (
-    <Col xs={12} md={4}>
-    <Card>
+    <Col xs={12} md={3}  className="my-4">
+    <Card className='single__card'>
       <Card.Img variant="top" src={article.imageUrl}/>
-      <Card.Body>
+      <Card.Body className='d-flex flex-column justify-content-between'>
         <Card.Title>{article.title}</Card.Title>
         <Card.Text>
           {getFirstEightWords(article.summary)+ '...'}
